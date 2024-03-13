@@ -1,9 +1,8 @@
 const express = require("express");
 const { spawn } = require("child_process");
-const cors = require("cors");
+const cors = require("cors"); // Import CORS middleware
 const app = express();
 const port = 3000;
-
 app.use(cors());
 app.use(express.json());
 app.set("view engine", "ejs");
@@ -24,35 +23,40 @@ app.get("/private-resource", (req, res) => {
   res.json({ data: "Private resource data" });
 });
 
-// Route for correcting text
+// Define a route to render a page
+app.get("/", (req, res) => {
+  // Render the 'index.ejs' template
+  res.render("spell-correct.ejs");
+});
+
 app.post("/correct", async (req, res) => {
-  try {
-    const inputText = req.body.text;
+  var inputText = req.body.text;
+  console.log(inputText);
 
-    const pythonProcess = spawn("python", [
-      "views/py/spell_correction.py",
-      inputText,
-    ]);
+  // Execute the Python script
+  const pythonProcess = spawn("python", [
+    "views/py/spell_correction.py",
+    inputText,
+  ]);
 
-    let correctedText = "";
+  let correctedText = "";
 
-    pythonProcess.stdout.on("data", (data) => {
-      correctedText += data;
-    });
+  // Collect data from the Python process
+  pythonProcess.stdout.on("data", (data) => {
+    correctedText += data;
+  });
 
-    pythonProcess.stderr.on("data", (data) => {
-      console.error(`Error: ${data}`);
-    });
+  // Handle errors
+  pythonProcess.stderr.on("data", (data) => {
+    console.error(`Error: ${data}`);
+  });
 
-    pythonProcess.on("close", (code) => {
-      console.log(`Python process exited with code ${code}`);
-      console.log(correctedText);
-      res.json({ correctedText }); // Send the corrected text back to the client
-    });
-  } catch (error) {
-    console.error("Error processing request:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
+  // When the process exits
+  pythonProcess.on("close", (code) => {
+    console.log(`Python process exited with code ${code}`);
+    console.log(correctedText);
+    res.json(correctedText); // Send the corrected text back to the client
+  });
 });
 
 app.listen(port, () => {

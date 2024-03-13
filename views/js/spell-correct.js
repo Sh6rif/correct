@@ -16,7 +16,6 @@ async function correct() {
     });
 
     var result = await correct.json();
-    result = result.trim();
     console.log(result);
     divText.innerHTML = `<p class="theText">${result}</p>`;
   } catch (error) {
