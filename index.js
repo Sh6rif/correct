@@ -19,8 +19,11 @@ app.post("/correct", async (req, res) => {
   console.log(inputText);
 
   // Execute the Python script
-  const pythonProcess = spawn("python", [
-    "views/py/spell_correction.py",
+
+  const pythonProcess = spawn("pipenv", [
+    "run",
+    "python",
+    "spell_correction.py",
     inputText,
   ]);
 
@@ -39,7 +42,7 @@ app.post("/correct", async (req, res) => {
   // When the process exits
   pythonProcess.on("close", (code) => {
     console.log(`Python process exited with code ${code}`);
-    res.json(correctedText); // Send the corrected text back to the client
+    res.json(correctedText.trim()); // Send the corrected text back to the client
   });
 });
 
