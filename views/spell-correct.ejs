@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/spell-correct.css" />
+    <title>Spell Correct</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="correct">
+        <input
+          id="correctInput"
+          type="text"
+          class="correctTerm"
+          onkeyup="correct()"
+          placeholder="Write Wrong Text to Correct it"
+        />
+      </div>
+      <div class="correctText" id="divText"></div>
+    </div>
+    <script src="js/spell-correct.js"></script>
+  </body>
+</html>
