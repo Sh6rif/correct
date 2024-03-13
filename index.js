@@ -9,7 +9,7 @@ app.set("view engine", "ejs");
 app.use(express.static("views"));
 
 // Define a route to render a page
-app.get("/spell", (req, res) => {
+app.get("/", (req, res) => {
   // Render the 'index.ejs' template
   res.render("spell-correct.ejs");
 });
