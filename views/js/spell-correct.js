@@ -16,7 +16,6 @@ async function correct() {
     });
 
     var result = await correct.json();
-    console.log(result);
     divText.innerHTML = `<p class="theText">${result}</p>`;
   } catch (error) {
     console.error("Error fetching or processing data:", error);

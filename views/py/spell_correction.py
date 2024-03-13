@@ -8,7 +8,9 @@ def correct_spelling(text):
     corrected_text = ' '.join(corrected_words)
     return corrected_text
 
-input_text = sys.argv[1]
-corrected_text = correct_spelling(input_text)
-corrected_text = corrected_text.upper()
-print(corrected_text)
+if __name__ == "__main__":
+    input_text = sys.argv[1]
+    corrected_text = correct_spelling(input_text)
+    corrected_text = corrected_text.upper()
+    print(corrected_text)
+    sys.stdout.flush()
